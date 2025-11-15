@@ -248,6 +248,8 @@ Original PromptShield paper:
 
 4. Touvron, H., et al. (2023). Llama 2: Open Foundation and Fine-Tuned Chat Models. arXiv preprint arXiv:2307.09288.
 
+5. Claude 4.5 Sonnet.
+
 ## License
 
 This research implementation is provided for academic and research purposes. The Llama 3.1 model is subject to Meta's license agreement. The PromptShield dataset is subject to its original license terms.
