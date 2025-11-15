@@ -280,3 +280,5 @@ Guo, C., Pleiss, G., Sun, Y., & Weinberger, K. Q. (2017). On Calibration of Mode
 Touvron, H., et al. (2023). Llama 2: Open Foundation and Fine-Tuned Chat Models. arXiv preprint arXiv:2307.09288.
 
 Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). QLoRA: Efficient Finetuning of Quantized LLMs. Advances in Neural Information Processing Systems (NeurIPS).
+
+Claude 4.5 Sonnet.
