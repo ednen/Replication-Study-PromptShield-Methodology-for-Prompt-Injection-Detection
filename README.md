@@ -4,7 +4,7 @@
 
 ## Overview
 
-This repository contains an implementation replicating the PromptShield methodology for detecting prompt injection attacks on Large Language Models (LLMs). The work validates PromptShield's approach using Llama 3.1 8B with Low-Rank Adaptation (LoRA) fine-tuning and demonstrates deployment-viable performance on the PromptShield benchmark dataset.
+This repository contains an implementation replicating the PromptShield methodology for detecting prompt injection attacks on Large Language Models (LLMs). The work validates PromptShield's approach using Llama 3.1 8B with Low-Rank Adaptation (LoRA) fine-tuning and demonstrates deployment-viable performance on the PromptShield benchmark dataset.Model itself can be reached from https://huggingface.co/Ednen/promptshieldreplicate/tree/main.
 
 ## Motivation
 
