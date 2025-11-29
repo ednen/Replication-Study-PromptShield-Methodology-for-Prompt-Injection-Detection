@@ -194,3 +194,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 ---
 
 **Note**: This research was conducted as part of an undergraduate thesis on AI security, focusing on prompt injection detection systems and their deployment viability at extremely low false positive rates.
+**Note on LLMail → Direct transfer**: The 0% result may be partially 
+attributed to input format mismatch (LLMail trained on email format, 
+tested on raw prompts). The model may have some detection capability 
+that falls below the 1% FPR threshold.
