@@ -1,26 +1,26 @@
-# Cross-Domain Generalization in Prompt Injection Detection
+ Cross-Domain Generalization in Prompt Injection Detection
 
 This repository presents cross-evaluation findings for prompt injection detection models, examining how detectors trained on one attack type generalize to unseen attack types.
 
-## Research Overview
+ Research Overview
 
 We trained two detection models using the PromptShield methodology (LoRA fine-tuning on Llama 3.1 8B) and evaluated their cross-domain generalization capabilities:
 
 | Model | Training Data | Attack Type |
 |-------|---------------|-------------|
-| **PromptShield Model** | [hendzh/PromptShield](https://huggingface.co/datasets/hendzh/PromptShield) | Direct prompt injections |
-| **LLMail Model** | [microsoft/llmail-inject-challenge](https://huggingface.co/datasets/microsoft/llmail-inject-challenge) | Indirect injections via email |
+| PromptShield Model | [hendzh/PromptShield](https://huggingface.co/datasets/hendzh/PromptShield) | Direct prompt injections |
+| LLMail Model | [microsoft/llmail-inject-challenge](https://huggingface.co/datasets/microsoft/llmail-inject-challenge) | Indirect injections via email |
 
-## Key Results
+ Key Results
 
-### Cross-Evaluation Matrix (TPR @ 1% FPR)
+ Cross-Evaluation Matrix (TPR @ 1% FPR)
 
-|  | → Direct Attacks | → Indirect Attacks |
+|  |  Direct Attacks |  Indirect Attacks |
 |--|------------------|-------------------|
-| **PromptShield Model** | **66.4%** (in-domain) | **68.6%** (zero-shot) |
-| **LLMail Model** | 0.0% (zero-shot) | **43.4%** (in-domain) |
+| PromptShield Model | 66.4% (in-domain) | 68.6% (zero-shot) |
+| **LLMail Model** | 0.0% (zero-shot) | 43.4% (in-domain) |
 
-### Performance Summary
+ Performance Summary
 
 | Metric | PromptShield Model | LLMail Model |
 |--------|-------------------|--------------|
@@ -28,19 +28,19 @@ We trained two detection models using the PromptShield methodology (LoRA fine-tu
 | In-Domain TPR @ 0.1% FPR | 43.2% | 24.9% |
 | In-Domain AUC | 0.970 | 0.871 |
 | Zero-Shot TPR @ 1% FPR | 68.6% | 0.0% |
-| Generalization Gap | **-2.2 pts** (improved!) | +43.4 pts |
+| Generalization Gap | -2.2 pts | +43.4 pts |
 
-## Key Findings
+ Key Findings
 
-### 1. PromptShield Shows Robust Cross-Domain Transfer
+ 1. PromptShield Shows Robust Cross-Domain Transfer
 
 The PromptShield model (trained on direct attacks) achieves **higher performance on indirect attacks** (68.6%) than on its own training domain (66.4%). This remarkable finding suggests:
 
-- **Learned generalizable injection patterns** that transcend attack delivery mechanisms
+- Learned generalizable injection patterns that transcend attack delivery mechanisms
 - Direct injection training captures fundamental adversarial features useful across domains
 - The model's detection capabilities are not overfitted to direct attack formats
 
-### 2. Asymmetric Generalization
+ 2. Asymmetric Generalization
 
 While PromptShield generalizes excellently to indirect attacks, the reverse is not true:
 
@@ -51,15 +51,15 @@ While PromptShield generalizes excellently to indirect attacks, the reverse is n
 
 This asymmetry suggests that **direct injection patterns are more fundamental** and transferable, whereas indirect attack detection relies on domain-specific features (email structure, context manipulation) that don't generalize.
 
-### 3. Implications for Defense Strategy
+ 3. Implications for Defense Strategy
 
-- **Direct injection training provides broad protection**: A model trained on direct attacks offers meaningful defense against indirect attacks
-- **Indirect injection training is specialized**: Models trained only on indirect attacks fail completely on direct attacks
-- **Recommended approach**: Train on direct injections as a baseline, with optional domain-specific fine-tuning
+- Direct injection training provides broad protection: A model trained on direct attacks offers meaningful defense against indirect attacks
+- Indirect injection training is specialized: Models trained only on indirect attacks fail completely on direct attacks
+- Recommended approach: Train on direct injections as a baseline, with optional domain-specific fine-tuning
 
-## Methodology
+ Methodology
 
-### Training Configuration
+ Training Configuration
 
 Both models use identical architecture and training setup:
 
@@ -72,19 +72,19 @@ Epochs:          3
 Batch Size:      32 (effective)
 ```
 
-### Evaluation Protocol
+ Evaluation Protocol
 
 Following PromptShield methodology, we evaluate at deployment-critical FPR thresholds:
 
-- **TPR @ 0.1% FPR**: Ultra-low false positive rate (1 false alarm per 1,000 requests)
-- **TPR @ 1% FPR**: Standard deployment threshold
-- **AUC**: Overall discriminative ability
+- TPR @ 0.1% FPR
+- TPR @ 1% FPR
+- AUC
 
 Temperature scaling is applied for probability calibration before threshold-based evaluation.
 
-## Detailed Results
+ Detailed Results
 
-### PromptShield Model Performance
+ PromptShield Model Performance
 
 ```
 In-Domain (Direct Attacks):
@@ -99,7 +99,7 @@ Zero-Shot (Indirect Attacks):
 └── Retention:     103.3% (exceeds in-domain!)
 ```
 
-### LLMail Model Performance
+ LLMail Model Performance
 
 ```
 In-Domain (Indirect Attacks):
@@ -114,9 +114,9 @@ Zero-Shot (Direct Attacks):
 └── Retention:     0.0%
 ```
 
-## Visualizations
+ Visualizations
 
-### Cross-Evaluation Heatmap
+ Cross-Evaluation Heatmap
 
 ```
                     Test Dataset
@@ -130,7 +130,7 @@ Model         │  (zero-shot)  │  (in-domain)│
               └─────────────────────────────┘
 ```
 
-### Generalization Comparison
+ Generalization Comparison
 
 ```
 PromptShield: ██████████████████████████████████  66.4% → 68.6% (+2.2 pts) ✓
@@ -138,21 +138,21 @@ LLMail:       █████████████████████░
               0%              25%             50%            75%           100%
 ```
 
-## Implications
+ Implications
 
-### For Practitioners
+ For Practitioners
 
-1. **Prioritize direct injection training**: Models trained on direct attacks generalize well to indirect attacks
-2. **Don't rely solely on indirect attack training**: Such models fail on direct attacks
-3. **Layer defenses**: Combine a direct-injection-trained detector with domain-specific monitoring
+1. Prioritize direct injection training: Models trained on direct attacks generalize well to indirect attacks
+2. Don't rely solely on indirect attack training: Such models fail on direct attacks
+3. Layer defenses: Combine a direct-injection-trained detector with domain-specific monitoring
 
-### For Researchers
+ For Researchers
 
-1. **Investigate what makes direct patterns transferable**: Understanding this could improve detector design
-2. **Explore multi-domain training**: Can combined training achieve best of both worlds?
-3. **Attack feature analysis**: Characterize which features enable/prevent cross-domain transfer
+1. Investigate what makes direct patterns transferable: Understanding this could improve detector design
+2. Explore multi-domain training: Can combined training achieve best of both worlds?
+3. Attack feature analysis: Characterize which features enable/prevent cross-domain transfer
 
-## Repository Structure
+ Repository Structure
 
 ```
 ├── notebooks/
@@ -168,7 +168,7 @@ LLMail:       █████████████████████░
     └── generalization_comparison.png
 ```
 
-## Citation
+ Citation
 
 If you use these findings in your research, please cite:
 
@@ -181,20 +181,21 @@ If you use these findings in your research, please cite:
 }
 ```
 
-## References
+ References
 
-1. **PromptShield**: Hend Alzahrani et al. "PromptShield: A Unified Framework for Prompt Injection Detection" (UC Berkeley, David Wagner Research Group)
-2. **LLMail-Inject**: Microsoft Security Research, SaTML 2025 Competition Dataset
-3. **LoRA**: Hu et al. "LoRA: Low-Rank Adaptation of Large Language Models" (2021)
+1. PromptShield: Hend Alzahrani et al. "PromptShield: A Unified Framework for Prompt Injection Detection" (UC Berkeley, David Wagner Research Group)
+2. LLMail-Inject: Microsoft Security Research, SaTML 2025 Competition Dataset
+3. LoRA: Hu et al. "LoRA: Low-Rank Adaptation of Large Language Models" (2021)
+4. Claude 4.5 Sonnet
 
-## License
+ License
 
 MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-**Note**: This research was conducted as part of an undergraduate thesis on AI security, focusing on prompt injection detection systems and their deployment viability at extremely low false positive rates.
-**Note on LLMail → Direct transfer**: The 0% result may be partially 
+Note: This research was conducted as part of an undergraduate thesis on AI security, focusing on prompt injection detection systems and their deployment viability at extremely low false positive rates.
+Note on LLMail Direct transfer: The 0% result may be partially 
 attributed to input format mismatch (LLMail trained on email format, 
 tested on raw prompts). The model may have some detection capability 
 that falls below the 1% FPR threshold.
