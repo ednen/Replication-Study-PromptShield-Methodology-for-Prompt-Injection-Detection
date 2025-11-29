@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "title": "Cross-Domain Generalization in Prompt Injection Detection",
+    "date": "2024-11",
+    "methodology": "PromptShield replication with Llama 3.1 8B + LoRA"
+  },
+  "models": {
+    "promptshield": {
+      "name": "PromptShield Model",
+      "base_model": "meta-llama/Llama-3.1-8B",
+      "training_data": "hendzh/PromptShield",
+      "attack_type": "direct_prompt_injection",
+      "precision": "4-bit (QLoRA)"
+    },
+    "llmail": {
+      "name": "LLMail Model",
+      "base_model": "meta-llama/Llama-3.1-8B",
+      "training_data": "microsoft/llmail-inject-challenge",
+      "attack_type": "indirect_injection_email",
+      "precision": "4-bit (QLoRA)"
+    }
+  },
+  "in_domain_performance": {
+    "promptshield": {
+      "test_data": "PromptShield test split",
+      "attack_type": "direct",
+      "metrics": {
+        "AUC": 0.970,
+        "TPR@0.05%FPR": 0.331,
+        "TPR@0.10%FPR": 0.432,
+        "TPR@0.50%FPR": 0.588,
+        "TPR@1.00%FPR": 0.664
+      }
+    },
+    "llmail": {
+      "test_data": "LLMail Phase1+Phase2 with FP test emails",
+      "attack_type": "indirect",
+      "metrics": {
+        "AUC": 0.871,
+        "TPR@0.05%FPR": 0.224,
+        "TPR@0.10%FPR": 0.249,
+        "TPR@0.50%FPR": 0.363,
+        "TPR@1.00%FPR": 0.434
+      }
+    }
+  },
+  "cross_evaluation": {
+    "promptshield_to_llmail": {
+      "description": "PromptShield model tested on indirect attacks (zero-shot)",
+      "TPR@1.00%FPR": 0.686,
+      "generalization_gap": -0.022,
+      "retention_rate": 1.033,
+      "interpretation": "Excellent transfer - exceeds in-domain performance"
+    },
+    "llmail_to_promptshield": {
+      "description": "LLMail model tested on direct attacks (zero-shot)",
+      "TPR@1.00%FPR": 0.000,
+      "generalization_gap": 0.434,
+      "retention_rate": 0.000,
+      "interpretation": "No transfer - complete failure on direct attacks"
+    }
+  },
+  "cross_evaluation_matrix": {
+    "TPR@1%FPR": {
+      "promptshield_to_direct": 0.664,
+      "promptshield_to_indirect": 0.686,
+      "llmail_to_direct": 0.000,
+      "llmail_to_indirect": 0.434
+    }
+  },
+  "summary_statistics": {
+    "average_in_domain_TPR@1%FPR": 0.549,
+    "average_zero_shot_TPR@1%FPR": 0.343,
+    "promptshield_generalization": "positive (+2.2 pts)",
+    "llmail_generalization": "none (0%)",
+    "asymmetry": "Strong - direct→indirect works, indirect→direct fails"
+  },
+  "key_findings": [
+    "PromptShield model generalizes excellently to indirect attacks (68.6% vs 66.4% in-domain)",
+    "Direct injection training captures transferable adversarial patterns",
+    "Indirect injection training shows no transfer to direct attacks (0%)",
+    "Generalization is strongly asymmetric between attack types",
+    "Direct injection training recommended as baseline for broad protection"
+  ],
+  "training_configuration": {
+    "base_model": "Llama 3.1 8B",
+    "fine_tuning": "LoRA",
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "quantization": "4-bit NF4",
+    "learning_rate": 2e-4,
+    "epochs": 3,
+    "effective_batch_size": 32,
+    "max_sequence_length": 512,
+    "temperature_scaling": true
+  }
+}
