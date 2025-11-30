@@ -173,10 +173,10 @@ LLMail:       █████████████████████░
 If you use these findings in your research, please cite:
 
 ```bibtex
-@misc{promptinjection_crosseval_2024,
+@misc{promptinjection_crosseval_2025,
   title={Cross-Domain Generalization in Prompt Injection Detection},
-  author={[Your Name]},
-  year={2024},
+  author={Ozan Bülen},
+  year={2025},
   note={Undergraduate Thesis Research}
 }
 ```
