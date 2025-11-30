@@ -4,7 +4,7 @@ This repository presents cross-evaluation findings for prompt injection detectio
 
  Research Overview
 
-We trained two detection models using the PromptShield methodology (LoRA fine-tuning on Llama 3.1 8B) and evaluated their cross-domain generalization capabilities:
+ I trained two detection models using the PromptShield methodology (LoRA fine-tuning on Llama 3.1 8B) and evaluated their cross-domain generalization capabilities:
 
 | Model | Training Data | Attack Type |
 |-------|---------------|-------------|
@@ -18,7 +18,7 @@ We trained two detection models using the PromptShield methodology (LoRA fine-tu
 |  |  Direct Attacks |  Indirect Attacks |
 |--|------------------|-------------------|
 | PromptShield Model | 66.4% (in-domain) | 68.6% (zero-shot) |
-| **LLMail Model** | 0.0% (zero-shot) | 43.4% (in-domain) |
+| LLMail Model | 0.0% (zero-shot) | 43.4% (in-domain) |
 
  Performance Summary
 
@@ -46,10 +46,10 @@ While PromptShield generalizes excellently to indirect attacks, the reverse is n
 
 | Direction | TPR @ 1% FPR | Interpretation |
 |-----------|--------------|----------------|
-| Direct → Indirect | 68.6% | **Excellent transfer** |
-| Indirect → Direct | 0.0% | **No transfer** |
+| Direct → Indirect | 68.6% | Excellent transfer |
+| Indirect → Direct | 0.0% | No transfer |
 
-This asymmetry suggests that **direct injection patterns are more fundamental** and transferable, whereas indirect attack detection relies on domain-specific features (email structure, context manipulation) that don't generalize.
+This asymmetry suggests that **direct injection patterns are more fundamental and transferable, whereas indirect attack detection relies on domain-specific features (email structure, context manipulation) that don't generalize.**
 
  3. Implications for Defense Strategy
 
