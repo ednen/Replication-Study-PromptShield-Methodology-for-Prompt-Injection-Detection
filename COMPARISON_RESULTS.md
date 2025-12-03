@@ -6,17 +6,17 @@ A comprehensive comparison of prompt injection detection models at deployment-cr
 
 | Benchmark | Prompt Guard 2 | PromptShield (Ours) | Winner |
 |-----------|----------------|---------------------|--------|
-| **Mixed Attacks** (TPR@1%FPR) | 16.5% | **66.7%** | PromptShield |
-| **Indirect Attacks** (TPR@1%FPR) | **87.6%** | 71.1% | Prompt Guard 2 |
-| **Over-Defense** (Accuracy) | 98.5% | **100.0%** | PromptShield |
+| Mixed Attacks (TPR@1%FPR) | 16.5% | 66.7% | PromptShield |
+| Indirect Attacks (TPR@1%FPR) | 87.6% | 71.1% | Prompt Guard 2 |
+| Over-Defense (Accuracy) | 98.5% | 100.0% | PromptShield |
 
 ## Key Findings
 
-1. **PromptShield achieves 4x higher detection on mixed attacks** - 66.7% vs 16.5% TPR at 1% FPR, indicating superior performance on the standard PromptShield benchmark.
+1. PromptShield achieves 4x higher detection on mixed attacks - 66.7% vs 16.5% TPR at 1% FPR, indicating superior performance on the standard PromptShield benchmark.
 
-2. **Prompt Guard 2 excels at indirect attacks** - 87.6% vs 71.1% on email-based injections (LLMail), suggesting optimization for embedded/indirect threat vectors.
+2. Prompt Guard 2 excels at indirect attacks - 87.6% vs 71.1% on email-based injections (LLMail), suggesting optimization for embedded/indirect threat vectors.
 
-3. **PromptShield has zero false positives** - Perfect 100% accuracy on NotInject benchmark (0/339 false alarms) vs Prompt Guard 2's 5 false positives.
+3. PromptShield has zero false positives - Perfect 100% accuracy on NotInject benchmark (0/339 false alarms) vs Prompt Guard 2's 5 false positives.
 
 ## Methodology
 
@@ -37,9 +37,9 @@ A comprehensive comparison of prompt injection detection models at deployment-cr
 
 ### Evaluation Protocol
 
-- **Metric**: True Positive Rate (TPR) at 1% False Positive Rate (FPR)
-- **Calibration**: Temperature scaling (T=5.89) applied to PromptShield
-- **Thresholds**: Calibrated independently on each model's mixed attack performance
+- Metric: True Positive Rate (TPR) at 1% False Positive Rate (FPR)
+- Calibration: Temperature scaling (T=5.89) applied to PromptShield
+- Thresholds: Calibrated independently on each model's mixed attack performance
 
 ## Detailed Results
 
@@ -48,13 +48,13 @@ A comprehensive comparison of prompt injection detection models at deployment-cr
 | Model | TPR@1%FPR | TPR@0.1%FPR | AUC |
 |-------|-----------|-------------|-----|
 | Prompt Guard 2 | 16.5% | - | 0.853 |
-| PromptShield | **66.7%** | **43.3%** | **0.966** |
+| PromptShield | 66.7% | 43.3% | 0.966 |
 
 ### Indirect Attacks (LLMail Email Injections)
 
 | Model | TPR@1%FPR | AUC |
 |-------|-----------|-----|
-| Prompt Guard 2 | **87.6%** | **0.995** |
+| Prompt Guard 2 | 87.6% | 0.995 |
 | PromptShield | 71.1% | 0.929 |
 
 ### Over-Defense (NotInject)
@@ -62,26 +62,26 @@ A comprehensive comparison of prompt injection detection models at deployment-cr
 | Model | Accuracy | False Positives |
 |-------|----------|-----------------|
 | Prompt Guard 2 | 98.5% | 5/339 |
-| PromptShield | **100.0%** | **0/339** |
+| PromptShield | 100.0% | 0/339 |
 
 ## Interpretation
 
 The results reveal complementary strengths between the two approaches:
 
-- **PromptShield** excels at detecting mixed/direct prompt injections while maintaining zero false positives on benign inputs with trigger words.
+- PromptShield excels at detecting mixed/direct prompt injections while maintaining zero false positives on benign inputs with trigger words.
 
-- **Prompt Guard 2** demonstrates superior generalization to indirect attack vectors (email-based injections) despite weaker performance on the standard benchmark.
+- Prompt Guard 2 demonstrates superior generalization to indirect attack vectors (email-based injections) despite weaker performance on the standard benchmark.
 
 This suggests different optimization targets: PromptShield for precision on direct attacks, Prompt Guard 2 for broader indirect threat coverage.
 
 ## Citation
 
 ```bibtex
-@misc{promptshield_comparison_2024,
-  title={PromptShield vs Meta Prompt Guard 2: Comparative Evaluation},
-  author={[Your Name]},
-  year={2024},
-  url={https://github.com/[your-repo]}
+@misc{promptshield_comparison_2025,
+  title={PromptShield Replicate vs Meta Prompt Guard 2: Comparative Evaluation},
+  author={Ozan Bülen},
+  year={2025},
+  url={(https://github.com/ednen/Replication-Study-PromptShield-Methodology-for-Prompt-Injection-Detection/tree/cross-eval)}
 }
 ```
 
