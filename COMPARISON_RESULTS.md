@@ -1,4 +1,4 @@
-# PromptShield vs Meta Prompt Guard 2: Comparative Evaluation
+# PromptShield Replicate vs Meta Prompt Guard 2: Comparative Evaluation
 
 A comprehensive comparison of prompt injection detection models at deployment-critical thresholds.
 
@@ -12,11 +12,11 @@ A comprehensive comparison of prompt injection detection models at deployment-cr
 
 ## Key Findings
 
-1. PromptShield achieves 4x higher detection on mixed attacks - 66.7% vs 16.5% TPR at 1% FPR, indicating superior performance on the standard PromptShield benchmark.
+1. PromptShield Replicate achieves 4x higher detection on mixed attacks - 66.7% vs 16.5% TPR at 1% FPR, indicating superior performance on the standard PromptShield benchmark.
 
 2. Prompt Guard 2 excels at indirect attacks - 87.6% vs 71.1% on email-based injections (LLMail), suggesting optimization for embedded/indirect threat vectors.
 
-3. PromptShield has zero false positives - Perfect 100% accuracy on NotInject benchmark (0/339 false alarms) vs Prompt Guard 2's 5 false positives.
+3. PromptShield Replicate has zero false positives - Perfect 100% accuracy on NotInject benchmark (0/339 false alarms) vs Prompt Guard 2's 5 false positives.
 
 ## Methodology
 
@@ -68,11 +68,11 @@ A comprehensive comparison of prompt injection detection models at deployment-cr
 
 The results reveal complementary strengths between the two approaches:
 
-- PromptShield excels at detecting mixed/direct prompt injections while maintaining zero false positives on benign inputs with trigger words.
+- Our PromptShield Replicate excels at detecting mixed/direct prompt injections while maintaining zero false positives on benign inputs with trigger words.
 
-- Prompt Guard 2 demonstrates superior generalization to indirect attack vectors (email-based injections) despite weaker performance on the standard benchmark.
+- Despite lower standard benchmark results, Prompt Guard 2 generalizes better to indirect attack vectors like email-based injections, although the original PromptShield is still stronger.
 
-This suggests different optimization targets: PromptShield for precision on direct attacks, Prompt Guard 2 for broader indirect threat coverage.
+This suggests different optimization targets: Our PromptShield Replicate for precision on direct attacks, Prompt Guard 2 for broader indirect threat coverage.
 
 ## Citation
 
