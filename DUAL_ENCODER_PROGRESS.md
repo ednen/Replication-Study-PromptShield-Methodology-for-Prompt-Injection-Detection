@@ -10,7 +10,7 @@ Input: "Ignore previous instructions" → Model → 87% attack
 ```
 They only see the user input, not what instructions are being ignored.
 
-**Our approach is context-aware**:
+Our approach is context-aware:
 ```
 System: "You are a math tutor"     ──┐
                                      ├→ Model → Are these ALIGNED?
@@ -31,7 +31,7 @@ The relationship between system prompt and user input defines an attack.
 | User Encoder | DeBERTa-v3-small | 44M | Trainable |
 | Alignment Scorer | MLP | ~2M | Trainable |
 
-**Why asymmetric?**
+Why asymmetric?
 - System prompts need rich understanding → larger encoder
 - User inputs need attack pattern detection → smaller, trainable encoder
 - Freezing system encoder reduces overfitting
@@ -46,13 +46,13 @@ The relationship between system prompt and user input defines an attack.
 
 ### Key Design Choices
 
-1. **No Cosine Similarity**: Cosine measures semantic similarity, but attacks can be semantically similar to instructions while logically contradicting them. We use an MLP scorer instead.
+1. No Cosine Similarity: Cosine measures semantic similarity, but attacks can be semantically similar to instructions while logically contradicting them. We use an MLP scorer instead.
 
-2. **Energy-Based Loss**: Penalizes overconfident predictions on benign samples, improving out-of-distribution generalization.
+2. Energy-Based Loss: Penalizes overconfident predictions on benign samples, improving out-of-distribution generalization.
 
-3. **Curriculum Learning**: Train on easy attacks first (epochs 1-2), then add hard negatives (epochs 3-5).
+3. Curriculum Learning: Train on easy attacks first (epochs 1-2), then add hard negatives (epochs 3-5).
 
-4. **Hard Negative Mining**: Focus on subtle attacks that look legitimate (roleplay framing, hypothetical framing, false authority).
+4. Hard Negative Mining: Focus on subtle attacks that look legitimate (roleplay framing, hypothetical framing, false authority).
 
 ---
 
@@ -67,7 +67,7 @@ The relationship between system prompt and user input defines an attack.
 | TPR@1%FPR | 100% |
 | AUC | 0.9999 |
 
-⚠️ **Note**: These results indicate overfitting to training templates, not true generalization.
+ **Note: These results indicate overfitting to training templates, not true generalization.**
 
 ### Cross-Evaluation: PromptShield Benchmark
 
@@ -75,9 +75,9 @@ The relationship between system prompt and user input defines an attack.
 |-------|-----------|-------------|-----|
 | Meta Prompt Guard 2 | 16.5% | - | 0.853 |
 | PromptShield Replication | 66.7% | 43.3% | 0.966 |
-| **Asymmetric Dual-Encoder** | **91.2%** | **86.9%** | **0.997** |
+| Asymmetric Dual-Encoder | 91.2% | 86.9% | 0.997 |
 
-⚠️ **Data Leakage Warning**: PromptShield attacks were included in our training set (paired with different system prompts). These results are **not valid** for measuring true generalization.
+ **Data Leakage Warning: PromptShield attacks were included in our training set (paired with different system prompts). These results are not valid for measuring true generalization.**
 
 ### Cross-Evaluation: LLMail (True Out-of-Distribution)
 
@@ -85,7 +85,7 @@ The relationship between system prompt and user input defines an attack.
 |-------|----------------|-------|
 | Meta Prompt Guard 2 | 87.6% | Best on indirect attacks |
 | PromptShield Replication | 71.1% | Good generalization |
-| **Asymmetric Dual-Encoder** | **22.2%** | Poor generalization |
+| Asymmetric Dual-Encoder | 22.2% | Poor generalization |
 
 This is the **honest result**. The model failed to generalize to email-based indirect injections it never saw during training.
 
@@ -95,20 +95,20 @@ This is the **honest result**. The model failed to generalize to email-based ind
 
 ### What Worked
 
-1. **Architecture is sound**: The dual-encoder approach with MLP scorer trains successfully
-2. **Curriculum learning effective**: Smooth progression from easy to hard negatives
-3. **Fast convergence**: Model learned template patterns in ~5 epochs
-4. **High in-distribution performance**: Near-perfect on seen attack patterns
+1. Architecture is sound: The dual-encoder approach with MLP scorer trains successfully
+2. Curriculum learning effective: Smooth progression from easy to hard negatives
+3. Fast convergence: Model learned template patterns in ~5 epochs
+4. High in-distribution performance: Near-perfect on seen attack patterns
 
 ### What Didn't Work
 
-1. **Template overfitting**: Model memorized attack patterns, not logical contradiction
-2. **Format sensitivity**: Email-based attacks look very different from template attacks
-3. **Data contamination**: Including PromptShield test set in training invalidated evaluation
+1. Template overfitting: Model memorized attack patterns, not logical contradiction
+2. Format sensitivity: Email-based attacks look very different from template attacks
+3. Data contamination: Including PromptShield test set in training invalidated evaluation
 
 ### Why LLMail Failed
 
-LLMail attacks are **indirect injections** hidden in email content:
+LLMail attacks are indirect injections hidden in email content:
 ```
 Subject: Meeting Tomorrow
 
@@ -137,7 +137,7 @@ The model learned to detect explicit override language, not hidden payloads.
 |-------|-----------|--------|
 | Prompt Guard 2 | 16.5% | |
 | PromptShield Replication | 66.7% | |
-| Dual-Encoder | 91.2%* | ⚠️ Contaminated |
+| Dual-Encoder | 91.2%* |  Contaminated |
 
 ### Indirect Attacks (LLMail)
 
@@ -177,25 +177,25 @@ The dual-encoder architecture shows promise but requires **diverse training data
 
 ## Next Steps
 
-1. **Fix Data Contamination**: Retrain with proper train/test splits
+1. Fix Data Contamination: Retrain with proper train/test splits
    - Use only PromptShield train split
    - Hold out PromptShield test for evaluation
 
-2. **Add Indirect Attacks to Training**: Mix attack sources
+2. Add Indirect Attacks to Training: Mix attack sources
    - 50% direct attacks (PromptShield)
    - 50% indirect attacks (LLMail)
 
-3. **Expand Attack Templates**: Add more diverse patterns
+3. Expand Attack Templates: Add more diverse patterns
    - Email-based injections
    - Code comment injections
    - Markdown/JSON hidden payloads
 
-4. **Ablation Studies**: Measure contribution of each component
+4. Ablation Studies: Measure contribution of each component
    - With/without system encoder freezing
    - With/without energy loss
    - With/without curriculum learning
 
-5. **Evaluate on NotInject**: Test over-defense (false positive rate on benign inputs with trigger words)
+5. Evaluate on NotInject: Test over-defense (false positive rate on benign inputs with trigger words)
 
 ---
 
@@ -216,10 +216,10 @@ AsymmetricDualEncoder_[timestamp]/
 ## Citation
 
 ```bibtex
-@misc{asymmetric_dual_encoder_2024,
+@misc{asymmetric_dual_encoder_2025,
   title={Asymmetric Dual-Encoder for Context-Aware Prompt Injection Detection},
-  author={[Your Name]},
-  year={2024},
+  author={Ozan Bülen},
+  year={2025},
   note={Work in progress}
 }
 ```
